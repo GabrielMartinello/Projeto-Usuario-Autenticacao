@@ -13,5 +13,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gabriel Martinello",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielMartinello/Projeto-Usuario-Autenticacao.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GabrielMartinello/Projeto-Usuario-Autenticacao/issues"
+  },
+  "homepage": "https://github.com/GabrielMartinello/Projeto-Usuario-Autenticacao#readme"
 }

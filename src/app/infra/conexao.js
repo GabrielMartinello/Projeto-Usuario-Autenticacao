@@ -4,7 +4,7 @@ const conexao =  mysql.createConnection({
     port: 3306,
     user: 'root',
     password: 'admin',
-    database: 'api-usuario'
+    database: 'clientes'
 });
 
 module.exports = conexao;
