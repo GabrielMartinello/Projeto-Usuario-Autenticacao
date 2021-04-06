@@ -48,27 +48,18 @@ class Usuario {
         }
     }
 
-    buscarUsuario(id, res) {
+    buscarUsuario(id, res) {    
         dao.findUserById(id, (erro, resultados) => {
             if(erro) {
                 res.status(400).json(erro);
             }else {
+                console.log(resultados[0])            
                 const usuario = resultados[0];
+                
                 res.status(200).json(usuario);
             }
         });
     }
-
-    // alterar(id, valores, res) {
-    //     dao.alterarUsuario(id,valores, (erro, resultados) => {
-    //         if(erro) {
-    //             res.status(400).json(erro);
-    //         }else {
-    //             res.status(200).json({valores, id});
-    //             console.log(valores);
-    //         }
-    //     });
-    // }
 
     delete(id, res) {
         dao.deletarUsuario(id,(erro, resultados) => {
@@ -80,20 +71,24 @@ class Usuario {
         });
     }
 
-    autenticarUsuario(req, res) {
-        dao.findUserById(req.body.idUsuario, (erro, usuario) => {
-            console.log(usuario)
-            if (usuario != null) {
-                if (usuario.senha = req.body.senha) {
-                    return res.status(200).json();
+    autenticarUsuario( usuario ) {
+        
+
+        return new Promise( (reject, resolve) => {
+            dao.findUserById(usuario.idUsuario).then( resultado => {
+                const usuarioLocal = resultado[0];
+                if (!usuarioLocal) {
+                    reject( 'Usuário inválido' )
                 }
-                //nao permitido
-                return res.status(403);
-            }
-            //nao permitido
-            return res.status(403);
-        });
+                else if (usuarioLocal.senha === usuario.senha) {
+                    resolve('Autenticado!')
+                } else {
+                    reject( 'Senha inválida' )
+                }
+            }).catch( err => {
+                reject( err )
+            })
+        })
     }
 }
-
-module.exports = new Usuario()
+module.exports = new Usuario()  

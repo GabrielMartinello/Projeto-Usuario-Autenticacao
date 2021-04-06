@@ -13,16 +13,20 @@ class UsuariosDao {
         return query(sql, usuarios);    
     }
 
-    findUserById(id, getResult) {
+    findUserById( idUsuario, getResult ) {
         const sql = `SELECT 
             U.IDUSUARIO AS idUsuario,
             U.NOME AS nome,
             U.SENHA AS senha 
         FROM USUARIO U 
-        WHERE U.IDUSUARIO = ${id}`;
-        conexao.query(sql, (erro, resultados) => {            
+        WHERE U.IDUSUARIO = ${conexao.escape( idUsuario + "" )}`;
+
+        console.log(idUsuario);
+        console.log(sql);
+
+        query(sql, (erro, resultados) => {
             getResult(erro, resultados);
-        });
+        } );
     }
 
     // alterarUsuario(id, valores,getResult) {

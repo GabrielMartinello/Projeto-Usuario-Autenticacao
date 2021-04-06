@@ -1,4 +1,3 @@
-const { json } = require('express');
 const Usuario = require('../model/usuarios.js')
 
 module.exports = app => {
@@ -12,7 +11,7 @@ module.exports = app => {
      });
 
      app.get('/usuarios/:idUsuario',(req, res) => {
-         const idUsuario = JSON.stringify(req.params.idUsuario);
+         const idUsuario = req.params.idUsuario;
          Usuario.buscarUsuario(idUsuario, res);
      });
 
@@ -27,11 +26,16 @@ module.exports = app => {
      });
      
      app.delete('/usuarios/:idUsuario', (req,res) => {
-         const idUsuario = JSON.stringify(req.params.idUsuario);
+         const idUsuario = req.params.idUsuario;
          Usuario.delete(idUsuario, res);
      });
 
      app.post('/usuarios/login', (req, res) => {
-         Usuario.autenticarUsuario(req, res);
-     })
+        const usuario = req.body; 
+        Usuario.autenticarUsuario( usuario ).then( resultado => {
+            res.status(201).json(resultado);
+        }).catch( erro => {
+            res.status(400).json(erro)
+        });
+     });
 }
